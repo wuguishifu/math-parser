@@ -1,5 +1,6 @@
 import operators from "./Operators";
-const regex = new RegExp(`(\\d+|${Object.keys(operators).map(f => f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')}|\(|\))`, 'g');
+const regexString = `(\\d*\.?\d+|\\+|-|\\*|\/|\\^|\\(|\\)|${Object.keys(operators).map(f => f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`;
+const regex = new RegExp(regexString, 'g');
 
 export default function toRPN(input: string): string {
     const opSymbols = Object.keys(operators);
@@ -11,7 +12,10 @@ export default function toRPN(input: string): string {
     const push = (token: string) => stack.push(token);
     const append = (token: string) => output += ` ${token}`;
 
-    const tokens = input.split(regex).filter(t => t && t.trim().length > 0);
+    const tokens = input
+        .split(regex)
+        .filter(t => t && t.trim().length > 0)
+        .map(t => t.trim());
 
     for (const token of tokens) {
         if (!isNaN(parseFloat(token))) {
@@ -26,9 +30,7 @@ export default function toRPN(input: string): string {
         } else if (token === '(') {
             push(token);
         } else if (token === ')') {
-            while (peek() !== '(') {
-                append(pop());
-            }
+            while (peek() !== '(') append(pop());
             pop();
         } else {
             throw new Error(`Unknown token: ${token}`);

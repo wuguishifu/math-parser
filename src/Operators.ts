@@ -10,6 +10,7 @@ const operators: {
     exp: { precedence: 5, association: 'right', inputs: 1, f: Math.exp },
     abs: { precedence: 5, association: 'right', inputs: 1, f: Math.abs },
     ln: { precedence: 5, association: 'right', inputs: 1, f: Math.log },
+    log: { precedence: 5, association: 'right', inputs: 2, f: (a, b) => Math.log(a) / Math.log(b) },
     sin: { precedence: 5, association: 'right', inputs: 1, f: Math.sin },
     cos: { precedence: 5, association: 'right', inputs: 1, f: Math.cos },
     tan: { precedence: 5, association: 'right', inputs: 1, f: Math.tan },

@@ -1,5 +1,5 @@
 import operators from "./Operators";
-const regexString = `(\\d*\.?\d+|\\+|-|\\*|\/|\\^|\\(|\\)|${Object.keys(operators).map(f => f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`;
+const regexString = `,+|(\\d*\.?\d+|\\+|-|\\*|\/|\\^|\\(|\\)|${Object.keys(operators).map(f => f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`;
 const regex = new RegExp(regexString, 'g');
 
 export default function toRPN(input: string): string {
